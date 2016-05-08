@@ -43,7 +43,6 @@ export class Locations {
       body: JSON.stringify(location)
     }).then(response =>{
       this.previousLocations.push(location);
-      
     });
 
   	//if success add location data to previous locations

@@ -9,4 +9,4 @@ var locationSchema = new Schema({
     latitude: String
 });
 
-module.exports = mongoose.model( 'Location', locationSchema );
+module.exports = mongoose.model( 'Locations', locationSchema );

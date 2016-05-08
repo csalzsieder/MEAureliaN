@@ -1,8 +1,14 @@
 var express = require('express');
+var mongoose = require('mongoose');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var swig = require('swig');
+
+
+var db = mongoose.connect('mongodb://localhost:27017/smart');
+var Loc = require("./models/locationModel");
+
 var app = express();
 
 var allowCrossDomain = function(req, res, next) {
@@ -12,6 +18,8 @@ var allowCrossDomain = function(req, res, next) {
 
     next();
 };
+
+
 
 // view engine setup
 app.engine('html', swig.renderFile);
@@ -24,8 +32,12 @@ app.use(allowCrossDomain);
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 var api = require('./routes/api');
 app.use('/', api);
+
+locationRouter = require('./Routes/locationRouter')(Loc);
+app.use('/api/locations/user', locationRouter); 
 
 var debug = require('debug')('aurelia-node');
 

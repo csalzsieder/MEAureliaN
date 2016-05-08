@@ -1,31 +1,28 @@
 var express = require('express');
 var router = express.Router();
-var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
+// var mongoose = require('mongoose');
+// var bodyParser = require('body-parser');
 
-var db = mongoose.connect('mongodb://localhost:27017/smart');
-var Loc = require("../models/locationModel");
+// router.route('/locations/user')
+//     .post(function(req, res){
+// 	    var loc = new Loc(req.body);
+// 	    console.log(req.body);
 
-router.route('/locations/user')
-    .post(function(req, res){
-	    var loc = new Loc(req.body);
-	    console.log(req.body);
+// 	    loc.save();
+// 	    res.status(201).send(loc);
 
-	    loc.save();
-	    res.status(201).send(loc);
+//     });
 
-    });
-
-router.route('/locations/user/:userId')
-	.get(function(req,res){
-	    Loc.findById(req.params.userId, function(err,locations){
-	        if(err)
-	            res.status(500).send(err);
-	        else
-	        	console.log(req.params.userId);
-	            res.json(locations);
-	    });
-	});
+// router.route('/locations/user/:userId')
+// 	.get(function(req,res){
+// 	    Loc.find(req.params.userId, function(err,locations){
+// 	        if(err)
+// 	            res.status(500).send(err);
+// 	        else
+// 	        	console.log(req.params.userId);
+// 	            res.json(locations);
+// 	    });
+// 	});
 
 
 

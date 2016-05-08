@@ -7,7 +7,7 @@ var routes = function(Loc){
     locationRouter.route('/')
         .post(function(req, res){
             var location = new Loc(req.body);
-            Loc.save();
+            location.save();
             res.status(201).send(location);
 
         });
@@ -15,14 +15,12 @@ var routes = function(Loc){
     locationRouter.route('/:userId')
         .get(function(req,res){
 
-            
-
-            Loc.find({}, 'userId name' function(err,user){
-                if(err)
-                    console.log(req.params.userId);
+            Loc.find({'userId': req.params.userId}, function(err,user){
+                if(err) {
                     res.status(500).send(err);
-                else
+                } else {
                     res.json(user);
+                }
             });
 
             res.json(req.params.userId);
