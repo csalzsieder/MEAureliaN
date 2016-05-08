@@ -14,7 +14,7 @@ export class Locations {
     http.configure(config => {
       config
         .useStandardConfiguration()
-        .withBaseUrl('http://localhost:7000/locations/user')
+        .withBaseUrl('http://localhost:7000/api/locations/user')
          .withDefaults({
             headers: {
               'content-type': 'application/json',
