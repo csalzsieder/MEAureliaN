@@ -17,11 +17,11 @@ var tools = require('aurelia-tools');
 var nodemon = require('gulp-nodemon');
 
 var path = {
-  source:'public/app/src/**/*.js',
-  html:'public/app/src/**/*.html',
-  style:'public/app/styles/**/*.css',
-  output:'public/app/dist/',
-  doc:'public/app/doc'
+  source:'public/src/**/*.js',
+  html:'public/src/**/*.html',
+  style:'public/styles/**/*.css',
+  output:'public/dist/',
+  doc:'public/doc'
 };
 
 var compilerOptions = {
@@ -41,6 +41,14 @@ var jshintConfig = {esnext:true};
 gulp.task('clean', function() {
  return gulp.src([path.output])
     .pipe(vinylPaths(del));
+});
+
+gulp.task('default', () => {
+	return gulp.src('src/app.js')
+		.pipe(babel({
+			presets: ['es2015']
+		}))
+		.pipe(gulp.dest('dist'));
 });
 
 gulp.task('build-system', function () {

@@ -10,12 +10,13 @@
     "url": "git://github.com/zewa666/aurelia-node.git"
   },
   "dependencies": {
-    "body-parser": "~1.8.1",
+    "body-parser": "^1.8.4",
     "cookie-parser": "~1.3.3",
     "debug": "~2.0.0",
     "express": "~4.9.0",
     "github": "^0.2.4",
     "github-download": "*",
+    "mongoose": "^4.4.15",
     "swig": "^1.4.2"
   },
   "devDependencies": {

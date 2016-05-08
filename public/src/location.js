@@ -19,6 +19,8 @@ export class Locations {
 
   submit(){
   	//make api call to save form
+    var test = this.name;
+    var test2 = this.description;
 
   	//if success add location data to previous locations
   }
