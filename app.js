@@ -8,6 +8,7 @@ var swig = require('swig');
 
 var db = mongoose.connect('mongodb://localhost:27017/smart');
 var Loc = require("./models/locationModel");
+var User = require("./models/userModel");
 
 var app = express();
 
@@ -37,7 +38,10 @@ var api = require('./routes/api');
 app.use('/', api);
 
 locationRouter = require('./Routes/locationRouter')(Loc);
-app.use('/api/locations/user', locationRouter); 
+app.use('/api/user', locationRouter); 
+
+// userRouter = require('./Routes/userRouter')(Loc);
+// app.use('/api/user', userRouter); 
 
 var debug = require('debug')('aurelia-node');
 
