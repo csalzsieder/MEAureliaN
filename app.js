@@ -40,8 +40,8 @@ app.use('/', api);
 locationRouter = require('./Routes/locationRouter')(Loc);
 app.use('/api/user', locationRouter); 
 
-// userRouter = require('./Routes/userRouter')(Loc);
-// app.use('/api/user', userRouter); 
+userRouter = require('./Routes/userRouter')(User);
+app.use('/api/user', userRouter); 
 
 var debug = require('debug')('aurelia-node');
 
