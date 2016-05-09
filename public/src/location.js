@@ -1,16 +1,19 @@
 import {inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-fetch-client';
 import 'fetch';
+import { EventAggregator } from 'aurelia-event-aggregator';
 
-@inject(HttpClient)
+@inject(HttpClient, EventAggregator)
 export class Locations {
   name;
   description;
   longitude;
   latitude;
   previousLocations = [];
+  ea;
+  userId;
 
-  constructor(http) {
+  constructor(http, EventAggregator) {
     http.configure(config => {
       config
         .useStandardConfiguration()
@@ -22,14 +25,18 @@ export class Locations {
           });
     });
 
+    this.ea = EventAggregator;
     this.http = http;
+
+    let subscription = this.ea.subscribe('login', data => {
+      this.userId = data.userId;
+    });
   }
 
   activate() {
-    var uri = '/' + 1 + '/locations'
+    var uri = '/' + this.userId + '/locations'
 
-    var fetch = this.http.fetch(uri, {
-    })
+    var fetch = this.http.fetch(uri, {})
     .then(response => response.json())
     .then(data => {
 
@@ -42,20 +49,20 @@ export class Locations {
         }
 
         this.previousLocations.push(location);  
-      };
+      }
     });
   }
 
   submit(){
     var location = {
-      userId: 1,
+      userId: this.userId,
       name: this.name,
       description: this.description,
       longitude: this.longitude,
       latitude: this.latitude
     }
   	
-    var uri = '/' + location.userId + '/locations'
+    var uri = '/' + this.userId + '/locations'
 
     var fetch = this.http.fetch(uri, {
       method: 'post',

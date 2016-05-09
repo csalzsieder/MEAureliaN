@@ -4,7 +4,7 @@ var express = require('express');
 var routes = function(Loc){
     var locationRouter = express.Router();
 
-    locationRouter.use('/:userName/locations', function(req,res,next){
+    locationRouter.use('/:userId/locations', function(req,res,next){
         Loc.find({'userId': req.params.userId}, function(err,user){
             if(err)
                 res.status(500).send(err);
@@ -20,15 +20,16 @@ var routes = function(Loc){
         });
     });
 
-    locationRouter.route('/:userName/locations')
+    locationRouter.route('/:userId/locations')
+        .get(function(req,res){
+            res.json(req.user);
+        });
+    locationRouter.route('/locations')
         .post(function(req, res){
             var location = new Loc(req.body);
             location.save();
             res.status(201).send(location);
         })
-        .get(function(req,res){
-            res.json(req.user);
-        });
     return locationRouter;
 };
 
