@@ -4,7 +4,7 @@ var express = require('express');
 var routes = function(User){
     var userRouter = express.Router();
 
-    userRouter.route('/')
+    userRouter.route('')
         .post(function(req, res){
             var user = new User(req.body);
             user.save();
@@ -14,37 +14,24 @@ var routes = function(User){
 
             var query = {};
 
-            if(req.query.userName && req.query.password)
+            console.log(req.query);
+
+            if(req.query.username && req.query.password)
             {
-                query.userName = req.query.userName;
+                query.userName = req.query.username;
                 query.password = req.query.password;
-            }
 
-            User.find(query, function(err,user){
-                if(err)
-                    res.status(500).send(err);
-                else
-                    res.json(user);
-            });
-        });
-
-    userRouter.use('/:userId', function(req,res,next){
-        User.find({'userId': req.params.userId}, function(err,user){
-            if(err)
-                res.status(500).send(err);
-            else if(user) {
-                req.user = user;
-                next();
+                User.find(query, function(err,user){
+                    if(err)
+                        res.status(500).send(err);
+                    else
+                        res.json(user);
+                });
             } else {
-                res.status(404).send('no book found');
+                res.status(400).send("bad request");
             }
         });
-    });
 
-    userRouter.route('/:userId')
-        .get(function(req,res){
-            res.json(req.user);
-        });
     return userRouter;
 };
 
