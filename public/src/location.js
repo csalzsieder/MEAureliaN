@@ -1,20 +1,18 @@
 import {inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-fetch-client';
 import 'fetch';
-import { EventAggregator } from 'aurelia-event-aggregator';
 import {User} from './user'
 
-@inject(HttpClient, EventAggregator, User)
+@inject(HttpClient, User)
 export class Locations {
   name;
   description;
   longitude;
   latitude;
   previousLocations = [];
-  ea;
   user;
 
-  constructor(http, EventAggregator, User) {
+  constructor(http, User) {
     http.configure(config => {
       config
         .useStandardConfiguration()
@@ -27,12 +25,7 @@ export class Locations {
     });
 
     this.user = User;
-    this.ea = EventAggregator;
     this.http = http;
-
-    let subscription = this.ea.subscribe('login', data => {
-      this.userId = data.userId;
-    });
   }
 
   activate() {
