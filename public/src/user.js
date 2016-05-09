@@ -7,7 +7,11 @@ export class User {
   }
 
   getToken() {
-  	return this.cachedToken;
+  	if(this.cachedToken) {
+      return 'Bearer ' + this.cachedToken;
+    }
+
+    return null;
   }
 
   setToken(token) {

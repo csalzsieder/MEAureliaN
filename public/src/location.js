@@ -17,15 +17,23 @@ export class Locations {
       config
         .useStandardConfiguration()
         .withBaseUrl('http://localhost:7000/api/user')
-         .withDefaults({
-            headers: {
-              'content-type': 'application/json',
-            }
-          });
+        .withDefaults({
+          headers: {
+            'content-type': 'application/json',
+          }
+        })
+        .withInterceptor({
+          request(request) {
+            let authHeader = User.getToken();
+            request.headers.append('Authorization', authHeader);
+            return request;
+          }
+      });
     });
 
     this.user = User;
     this.http = http;
+
   }
 
   activate() {

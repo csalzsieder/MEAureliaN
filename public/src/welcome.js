@@ -38,6 +38,7 @@ export class Welcome {
     .then(data => {
       this.clearForm();
       this.user.loggedInUserId = data.user._id;
+      this.user.setToken(data.token);
     });
   }
 
@@ -52,6 +53,7 @@ export class Welcome {
     .then(data => {
       this.clearForm();
       this.user.loggedInUserId = data.user._id;
+      this.user.setToken(data.token);
     });
   }
 
