@@ -9,6 +9,23 @@ var routes = function(User){
             var user = new User(req.body);
             user.save();
             res.status(201).send(user);
+        })
+        .get(function(req,res){
+
+            var query = {};
+
+            if(req.query.userName && req.query.password)
+            {
+                query.userName = req.query.userName;
+                query.password = req.query.password;
+            }
+
+            User.find(query, function(err,user){
+                if(err)
+                    res.status(500).send(err);
+                else
+                    res.json(user);
+            });
         });
 
     userRouter.use('/:userId', function(req,res,next){
