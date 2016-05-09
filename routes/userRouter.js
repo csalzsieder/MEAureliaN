@@ -1,7 +1,6 @@
 var express = require('express');
 var jwt = require('jwt-simple');
 var passport = require('passport');
-var Local
 
 
 var routes = function(User){
@@ -18,9 +17,8 @@ var routes = function(User){
             })
 
             newUser.save(function(err){
-                res.status(200).send(newUser);
-                //createSendToken(newUser, res);
-            })
+                createSendToken(newUser, res);
+            });
         })
 
     userRouter.route('/login')
@@ -41,8 +39,7 @@ var routes = function(User){
                         return res.status(401).send({message: 'Wrong email/password'});              
                     }
 
-                    res.status(200).send(user);
-                    //createSendToken(user, res);
+                    createSendToken(user, res);
                 });
             })
         })
@@ -80,13 +77,16 @@ var routes = function(User){
 
 function createSendToken(user, res) {
     var payload = {
-        iss: req.hostname,
         sub: user._id
     }
 
     var token = jwt.encode(payload, "secret..");
 
-    res.status(200).send(payload);
+    res.status(200).send({
+        user: user,
+        token: token
+    });
+
 }
 
 module.exports = routes;

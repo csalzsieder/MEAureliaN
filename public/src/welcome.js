@@ -35,9 +35,9 @@ export class Welcome {
       body: JSON.stringify(user)
     })
     .then(response => response.json())
-    .then(user => {
-      this.clearForm()
-      this.user.loggedInUserId = user._id;
+    .then(data => {
+      this.clearForm();
+      this.user.loggedInUserId = data.user._id;
     });
   }
 
@@ -51,7 +51,7 @@ export class Welcome {
     .then(response => response.json())
     .then(data => {
       this.clearForm();
-      this.user.loggedInUserId = data._id;
+      this.user.loggedInUserId = data.user._id;
     });
   }
 

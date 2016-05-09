@@ -3,7 +3,7 @@ var jwt = require('jwt-simple');
 
 var routes = function(Loc){
     var locationRouter = express.Router();
-    //var token = jwt.encode(payload, "secret...");
+
 
     locationRouter.use('/:userId/locations', function(req,res,next){
         if(!req.headers.authorization){
@@ -13,6 +13,13 @@ var routes = function(Loc){
         }
 
         var token = req.headers.authorization.split(' ')[1];
+        var payload = jwt.decode(token, "secret...");
+
+        if(!payload.sub) {
+            return res.status(401).send({
+                message: 'Authentication failed'
+            });
+        }
 
         Loc.find({'userId': req.params.userId}, function(err,user){
             if(err)
