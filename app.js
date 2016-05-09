@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var swig = require('swig');
 
 
+
 var db = mongoose.connect('mongodb://localhost:27017/smart');
 var Loc = require("./models/locationModel");
 var User = require("./models/userModel");
@@ -41,7 +42,7 @@ locationRouter = require('./Routes/locationRouter')(Loc);
 app.use('/api/user', locationRouter); 
 
 userRouter = require('./Routes/userRouter')(User);
-app.use('/api/user', userRouter); 
+app.use('/api', userRouter); 
 
 var debug = require('debug')('aurelia-node');
 

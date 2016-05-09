@@ -1,10 +1,19 @@
 var express = require('express');
-
+var jwt = require('jwt-simple');
 
 var routes = function(Loc){
     var locationRouter = express.Router();
+    //var token = jwt.encode(payload, "secret...");
 
     locationRouter.use('/:userId/locations', function(req,res,next){
+        if(!req.headers.authorization){
+            return res.status(401).send({
+                message: 'You are not authorized'
+            });
+        }
+
+        var token = req.headers.authorization.split(' ')[1];
+
         Loc.find({'userId': req.params.userId}, function(err,user){
             if(err)
                 res.status(500).send(err);
@@ -26,6 +35,12 @@ var routes = function(Loc){
         });
     locationRouter.route('/locations')
         .post(function(req, res){
+            if(!req.headers.authorization){
+                return res.status(401).send({
+                    message: 'You are not authorized'
+                });
+            }
+
             var location = new Loc(req.body);
             location.save();
             res.status(201).send(location);

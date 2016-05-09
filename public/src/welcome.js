@@ -15,7 +15,7 @@ export class Welcome {
     http.configure(config => {
       config
         .useStandardConfiguration()
-        .withBaseUrl('http://localhost:7000/api/user')
+        .withBaseUrl('http://localhost:7000/api')
          .withDefaults({
             headers: {
               'content-type': 'application/json',
@@ -27,24 +27,24 @@ export class Welcome {
     this.http = http;
   }
 
-  submit() {
-    var uri = '/?username=' + this.userName + '&password=' + this.password;
+  login() {
+    var user = this.getUserCreds();    
 
-    var fetch = this.http.fetch(uri, {})
+    var fetch = this.http.fetch('/login', {
+      method: 'post',
+      body: JSON.stringify(user)
+    })
     .then(response => response.json())
-    .then(data => {
+    .then(user => {
       this.clearForm()
-      this.user.loggedInUserId = data[0]._id;
+      this.user.loggedInUserId = user._id;
     });
   }
 
-  signUp() {
-    var user = {
-      userName: this.userName,
-      password: this.password
-    }
+  register() {
+    var user = this.getUserCreds();
 
-    var fetch = this.http.fetch('', {
+    var fetch = this.http.fetch('/register', {
       method: 'post',
       body: JSON.stringify(user)
     })
@@ -58,6 +58,13 @@ export class Welcome {
   clearForm(){
       this.userName = '';
       this.password = ''; 
+  }
+
+  getUserCreds() {
+    return {
+      userName: this.userName,
+      password: this.password
+    }
   }
 
 }
