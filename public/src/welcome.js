@@ -2,16 +2,17 @@ import {inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-fetch-client';
 import 'fetch';
 import { EventAggregator } from 'aurelia-event-aggregator';
-import {Locations} from './location'
+import {User} from './user'
 
-@inject(HttpClient, EventAggregator, Locations)
+@inject(HttpClient, EventAggregator, User)
 export class Welcome {
   heading = 'Login';
   userName;
   password;
   ea;
+  user;
 
-  constructor(http, EventAggregator) {
+  constructor(http, EventAggregator, User) {
     http.configure(config => {
       config
         .useStandardConfiguration()
@@ -23,6 +24,7 @@ export class Welcome {
           });
     });
 
+    this.user = User;
     this.ea = EventAggregator;
     this.http = http;
   }
@@ -35,6 +37,7 @@ export class Welcome {
     .then(data => {
       this.clearForm()
       this.ea.publish('login', {userId: data[0]._id});
+      this.user.loggedInUserId = data[0]._id;
     });
   }
 
@@ -52,6 +55,7 @@ export class Welcome {
     .then(data => {
       this.clearForm();
       this.ea.publish('login', {userId: data._id});
+      this.user.loggedInUserId = data._id;
     });
   }
 
