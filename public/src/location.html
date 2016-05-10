@@ -1,40 +1,37 @@
 <template>
-	<h1>Add New Locations</h1>
-	<form role="form" submit.delegate="submit()">
-      <div class="form-group">
-        <label for="fn">Name</label>
-        <input type="text" value.bind="name" class="form-control" id="fn" placeholder="Name">
-      </div>
-      <div class="form-group">
-        <label for="ln">Description</label>
-        <input type="text" value.bind="description" class="form-control" id="ln" placeholder="Description">
-      </div>
-      <div class="form-group">
-        <label for="ln">Longitude</label>
-        <input type="text" value.bind="longitude" class="form-control" id="ln" placeholder="Longitude">
-      </div>
-      <div class="form-group">
-        <label for="ln">Latitude</label>
-        <input type="text" value.bind="latitude" class="form-control" id="ln" placeholder="Latitude">
-      </div>
-      <button type="submit" class="btn btn-default">Submit</button>
-    </form>
-    
-    <h1>Previous Locations</h1>
-    <ul repeat.for="location of previousLocations">
-    	<li>
-            ${location.name}
-    	</li>
-    	<li>
-            ${location.description}
-    	</li>
-    	<li>
-            ${location.longitude}
-    	</li>
-    	<li>
-            ${location.latitude}
-    	</li>
-    </ul>
+  <div show.bind="user.isAuthenticated()">
+  	<h1>Add New Locations</h1>
+  	<form role="form" submit.delegate="submit()">
+        <div class="form-group">
+          <label for="fn">Name</label>
+          <input type="text" value.bind="name" class="form-control" id="fn" placeholder="Name">
+        </div>
+        <div class="form-group">
+          <label for="ln">Description</label>
+          <input type="text" value.bind="description" class="form-control" id="ln" placeholder="Description">
+        </div>
+        <div class="form-group">
+          <label for="ln">Longitude</label>
+          <input type="text" value.bind="longitude" class="form-control" id="ln" placeholder="Longitude">
+        </div>
+        <div class="form-group">
+          <label for="ln">Latitude</label>
+          <input type="text" value.bind="latitude" class="form-control" id="ln" placeholder="Latitude">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+      
+      <h1>Previous Locations</h1>
+      <ul repeat.for="location of previousLocations">
+      	<li>${location.name}</li>
+      	<li>${location.description}</li>
+      	<li>${location.longitude}</li>
+      	<li>${location.latitude}</li>
+      </ul>
+  </div>
+  <div show.bind="!user.isAuthenticated()" >
+    <h1>You need to login to see this page</h1>
+  </div>
 </template>
 
 

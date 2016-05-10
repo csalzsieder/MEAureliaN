@@ -19,23 +19,25 @@ export class Locations {
   }
 
   activate() {
-    var uri = '/' + this.user.loggedInUserId + '/locations'
+    if(this.user.isAuthenticated()){
+      var uri = '/' + this.user.loggedInUserId + '/locations'
 
-    var fetch = this.http.fetch(uri, {})
-    .then(response => response.json())
-    .then(data => {
+      var fetch = this.http.fetch(uri, {})
+      .then(response => response.json())
+      .then(data => {
 
-      for (var i = 0; i < data.length; i++) {
-        var location = {
-          name: data[i].name,
-          description: data[i].description,
-          longitude: data[i].longitude,
-          latitude: data[i].latitude
+        for (var i = 0; i < data.length; i++) {
+          var location = {
+            name: data[i].name,
+            description: data[i].description,
+            longitude: data[i].longitude,
+            latitude: data[i].latitude
+          }
+
+          this.previousLocations.push(location);  
         }
-
-        this.previousLocations.push(location);  
-      }
-    });
+      });
+    }
   }
 
   submit(){
