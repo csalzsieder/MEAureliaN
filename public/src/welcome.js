@@ -25,7 +25,11 @@ export class Welcome {
   }
 
   login() {
-    var user = this.getUserCreds();    
+    var user = this.getUserCreds();  
+
+    if (!this.isValidUser("unable to login")) {
+      return;
+    }
 
     var fetch = this.http.fetch('/login', {
       method: 'post',
@@ -43,8 +47,7 @@ export class Welcome {
   register() {
     var user = this.getUserCreds();
 
-    if(this.userName == null || this.password == null){
-      alert("unable to register");
+    if(!this.isValidUser("unable to register")) {
       return;
     }
 
@@ -83,6 +86,15 @@ export class Welcome {
       userName: this.userName,
       password: this.password
     }
+  }
+
+  isValidUser(message) {
+    if(this.userName == null || this.password == null){
+      alert(message);
+      return false;
+    }
+
+    return true;
   }
 
 }
