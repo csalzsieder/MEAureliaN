@@ -13,27 +13,9 @@ export class Locations {
   user;
 
   constructor(http, User) {
-    http.configure(config => {
-      config
-        .useStandardConfiguration()
-        .withBaseUrl('http://localhost:7000/api/user')
-        .withDefaults({
-          headers: {
-            'content-type': 'application/json',
-          }
-        })
-        .withInterceptor({
-          request(request) {
-            let authHeader = User.getToken();
-            request.headers.append('Authorization', authHeader);
-            return request;
-          }
-      });
-    });
-
     this.user = User;
     this.http = http;
-
+    this.configureHttp(User);
   }
 
   activate() {
@@ -75,7 +57,18 @@ export class Locations {
       this.longitude = '';
       this.latitude = '';
     });
+  }
 
-  	//if success add location data to previous locations
+  configureHttp(user) {
+    this.http.configure(config => {
+      config
+        .withBaseUrl('http://localhost:7000/api/user')
+        .withDefaults({ 
+          headers: {
+            'content-type': 'application/json',
+            'Authorization': user.getToken()
+          }
+        })
+    });
   }
 }

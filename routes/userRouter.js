@@ -1,7 +1,6 @@
 var express = require('express');
 var jwt = require('jwt-simple');
-var passport = require('passport');
-
+var moment = require('moment');
 
 var routes = function(User){
     var userRouter = express.Router();
@@ -49,7 +48,8 @@ var routes = function(User){
 
 function createSendToken(user, res) {
     var payload = {
-        sub: user._id
+        sub: user._id,
+        exp: moment().add(10, 'days').unix()
     }
 
     var token = jwt.encode(payload, "secret..");

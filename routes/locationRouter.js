@@ -13,7 +13,12 @@ var routes = function(Loc){
         }
 
         var token = req.headers.authorization.split(' ')[1];
+
+        console.log(token);
+
         var payload = jwt.decode(token, "secret..");
+
+        console.log(payload);
 
         if(!payload.sub) {
             return res.status(401).send({

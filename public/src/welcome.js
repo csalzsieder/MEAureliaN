@@ -15,13 +15,8 @@ export class Welcome {
   constructor(http, User) {
     http.configure(config => {
       config
-        .useStandardConfiguration()
         .withBaseUrl('http://localhost:7000/api')
-         .withDefaults({
-            headers: {
-              'content-type': 'application/json',
-            }
-          });
+        .withDefaults({ headers: {'content-type': 'application/json'}})
     });
 
     this.user = User;
