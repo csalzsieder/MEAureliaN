@@ -10,6 +10,7 @@ export class Welcome {
   password;
   ea;
   user;
+  isUserLoggedIn;
 
   constructor(http, User) {
     http.configure(config => {
@@ -24,6 +25,7 @@ export class Welcome {
     });
 
     this.user = User;
+    this.isUserLoggedIn = this.user.isAuthenticated();
     this.http = http;
   }
 
@@ -36,14 +38,20 @@ export class Welcome {
     })
     .then(response => response.json())
     .then(data => {
-      this.clearForm();
-      this.user.loggedInUserId = data.user._id;
-      this.user.setToken(data.token);
+      this.formSuccess(data);
+    })
+    .catch(error => {
+      alert("Invalid credentials");
     });
   }
 
   register() {
     var user = this.getUserCreds();
+
+    if(this.userName == null || this.password == null){
+      alert("unable to register");
+      return;
+    }
 
     var fetch = this.http.fetch('/register', {
       method: 'post',
@@ -51,10 +59,23 @@ export class Welcome {
     })
     .then(response => response.json())
     .then(data => {
+      this.formSuccess(data);
+    })
+    .catch(error => {
+      alert("unable to register");
+    });;
+  }
+
+  logOut() {
+    this.user.removeToken();
+    this.isUserLoggedIn = this.user.isAuthenticated();
+  }
+
+  formSuccess(data) {
       this.clearForm();
       this.user.loggedInUserId = data.user._id;
       this.user.setToken(data.token);
-    });
+      this.isUserLoggedIn = this.user.isAuthenticated();
   }
 
   clearForm(){

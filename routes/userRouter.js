@@ -19,7 +19,7 @@ var routes = function(User){
             newUser.save(function(err){
                 createSendToken(newUser, res);
             });
-        })
+        });
 
     userRouter.route('/login')
         .post(function(req, res){
@@ -42,34 +42,6 @@ var routes = function(User){
                     createSendToken(user, res);
                 });
             })
-        })
-        .get(function(req,res){
-            //find by email
-            var query = {};
-
-            console.log(req.query);
-
-            if(req.query.username && req.query.password)
-            {
-                query.userName = req.query.username;
-                query.password = req.query.password;
-
-                User.find(query, function(err, user){
-                    if(err) {
-                        res.status(500).send(err);
-                    } else {
-                        User.comparePasswords(query.password, function(err, isMatch){
-                            if(err) throw err;
-
-                            if(isMatch)
-                                createSendToken(user,res);
-                        });
-                        
-                    }
-                });
-            } else {
-                res.status(400).send("bad request");
-            }
         });
 
     return userRouter;

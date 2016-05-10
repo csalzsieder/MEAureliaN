@@ -10,8 +10,9 @@
         <label for="ln">Password</label>
         <input type="text" value.bind="password" class="form-control" id="ln" placeholder="Password">
       </div>
-      <button type="button" click.delegate="login()" class="btn btn-default">Login</button>
-      <button type="button" click.delegate="register()" class="btn btn-default">Register</button>
+      <button type="button" show.bind="!isUserLoggedIn" click.delegate="login()" class="btn btn-default">Login</button>
+      <button type="button" show.bind="!isUserLoggedIn" click.delegate="register()" class="btn btn-default">Register</button>
+      <button type="button" show.bind="isUserLoggedIn" click.delegate="logOut()" class="btn btn-default">Log Out</button>
     </form>
   </section>
 </template>
